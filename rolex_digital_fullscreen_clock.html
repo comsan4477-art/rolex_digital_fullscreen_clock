@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الساعة الملكية الفاخرة | رولكس بشعار المملكة وساعة رقمية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cinzel:wght@600;700;800;900&family=Tajawal:wght@300;400;500;700;900&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --lume-glow: #00f2fe;
+            --lume-shadow: 0 0 16px rgba(0, 242, 254, 0.9), 0 0 35px rgba(0, 242, 254, 0.5);
+            --gold-grad: linear-gradient(135deg, #fae588 0%, #d4af37 50%, #997517 100%);
+            --silver-metal: linear-gradient(145deg, #f3f4f6 0%, #cbd5e1 35%, #94a3b8 70%, #f1f5f9 100%);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #030507;
+            user-select: none;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-orbitron { font-family: 'Orbitron', monospace; }
+        .font-tech { font-family: 'Share Tech Mono', monospace; }
+        .font-amiri { font-family: 'Amiri', serif; }
+
+        /* Direction force for numbers and clock */
+        .force-ltr {
+            direction: ltr !important;
+            unicode-bidi: isolate !important;
+        }
+
+        /* Metallic Watch Outer Ring & Knurled Coin Edge */
+        .rolex-knurling {
+            background: repeating-conic-gradient(
+                from 0deg,
+                #94a3b8 0deg 1.5deg,
+                #334155 1.5deg 3deg,
+                #f8fafc 3deg 4.5deg,
+                #0f172a 4.5deg 6deg
+            );
+            box-shadow: 
+                0 25px 60px -10px rgba(0,0,0,0.95),
+                inset 0 3px 6px rgba(255,255,255,0.4),
+                inset 0 -4px 10px rgba(0,0,0,0.8),
+                0 0 0 4px #0f172a,
+                0 0 0 8px #64748b,
+                0 0 0 12px #1e293b;
+        }
+
+        /* Sunburst dial effects */
+        .dial-green {
+            background: radial-gradient(circle at center, #065f46 0%, #022c22 60%, #01140f 100%);
+        }
+        .dial-black {
+            background: radial-gradient(circle at center, #1e293b 0%, #0b0f17 60%, #020408 100%);
+        }
+        .dial-blue {
+            background: radial-gradient(circle at center, #075985 0%, #082f49 60%, #02131e 100%);
+        }
+        .dial-gold {
+            background: radial-gradient(circle at center, #573a08 0%, #301f03 60%, #120b01 100%);
+        }
+
+        /* Cyclops Lens Magnifier on 3 o'clock date */
+        .cyclops-magnifier {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(0.2px) contrast(1.1);
+            box-shadow: 
+                inset 0 2px 5px rgba(255, 255, 255, 0.8),
+                inset 0 -2px 6px rgba(0, 0, 0, 0.7),
+                0 5px 12px rgba(0,0,0,0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.45);
+        }
+
+        /* Lume Night Glow Mode */
+        .lume-mode .chromalight-fill {
+            background-color: var(--lume-glow) !important;
+            box-shadow: var(--lume-shadow) !important;
+            border-color: #38bdf8 !important;
+        }
+        .lume-mode .chromalight-text {
+            color: #00f2fe !important;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.8) !important;
+        }
+
+        /* Hand Pivot Absolute Precise Centering */
+        .hand-pivot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform-origin: 50% 100%;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .seconds-pivot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform-origin: 50% 80%;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        /* Sapphire glass light reflection */
+        .sapphire-sheen {
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.2) 0%,
+                rgba(255, 255, 255, 0.05) 35%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.04) 70%,
+                rgba(255, 255, 255, 0.15) 100%
+            );
+        }
+
+        /* Digital Screen Glowing text */
+        .neon-glow {
+            text-shadow: 0 0 25px rgba(56, 189, 248, 0.85), 0 0 50px rgba(56, 189, 248, 0.4);
+        }
+        .neon-amber {
+            text-shadow: 0 0 25px rgba(245, 158, 11, 0.9), 0 0 50px rgba(245, 158, 11, 0.4);
+        }
+        .neon-green {
+            text-shadow: 0 0 25px rgba(52, 211, 153, 0.9), 0 0 50px rgba(52, 211, 153, 0.4);
+        }
+
+        /* HUD controls transition */
+        .hud-control {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .hud-hidden {
+            opacity: 0 !important;
+            transform: translateY(-20px) !important;
+            pointer-events: none !important;
+        }
+        .hud-hidden-bottom {
+            opacity: 0 !important;
+            transform: translateY(20px) !important;
+            pointer-events: none !important;
+        }
+    </style>
+</head>
+<body class="w-screen h-screen m-0 p-0 flex flex-col items-center justify-center relative overflow-hidden select-none bg-[#030609]">
+
+    <!-- Top floating HUD Toolbar -->
+    <header id="topHud" class="hud-control fixed top-5 z-50 flex flex-wrap items-center justify-center gap-2.5 px-5 py-2.5 rounded-full bg-slate-900/85 backdrop-blur-xl border border-slate-700/70 shadow-2xl">
+        <!-- Display Mode Switcher -->
+        <div class="flex items-center bg-slate-800/80 p-1 rounded-full text-xs font-semibold border border-slate-700">
+            <button id="btnRolexOnly" onclick="setDisplayMode('rolex')" class="px-3.5 py-1.5 rounded-full transition-all bg-emerald-600 text-white font-bold shadow">
+                الساعة الملكية
+            </button>
+            <button id="btnDigitalOnly" onclick="setDisplayMode('digital')" class="px-3.5 py-1.5 rounded-full transition-all text-slate-300 hover:text-white">
+                رقمية LED
+            </button>
+            <button id="btnDualMode" onclick="setDisplayMode('dual')" class="px-3.5 py-1.5 rounded-full transition-all text-slate-300 hover:text-white">
+                العرض المزدوج
+            </button>
+        </div>
+
+        <div class="h-5 w-[1px] bg-slate-700 mx-1"></div>
+
+        <!-- Bezel / Style Switcher -->
+        <div class="flex items-center gap-1.5" title="تغيير لون إطار وميناء الساعة">
+            <button onclick="changeRolexTheme('green')" title="الإصدار الأخضر الملكي السعودي" class="w-6 h-6 rounded-full bg-emerald-700 border-2 border-amber-400 hover:scale-110 transition shadow"></button>
+            <button onclick="changeRolexTheme('black')" title="الأسود الملكي سيراميك" class="w-6 h-6 rounded-full bg-black border-2 border-slate-400 hover:scale-110 transition shadow"></button>
+            <button onclick="changeRolexTheme('blue')" title="الأزرق الملكي" class="w-6 h-6 rounded-full bg-sky-700 border-2 border-slate-300 hover:scale-110 transition shadow"></button>
+            <button onclick="changeRolexTheme('gold')" title="إصدار الذهب الخالص" class="w-6 h-6 rounded-full bg-amber-600 border-2 border-amber-300 hover:scale-110 transition shadow"></button>
+        </div>
+
+        <div class="h-5 w-[1px] bg-slate-700 mx-1"></div>
+
+        <!-- Night Lume Light Button -->
+        <button id="btnLume" onclick="toggleLume()" title="إضاءة فوسفورية ليلية (Chromalight)" class="p-2 rounded-full hover:bg-slate-700 text-cyan-400 border border-slate-700/60 transition">
+            <i data-lucide="moon" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Mechanical Sound Tick Button -->
+        <button id="btnTickSound" onclick="toggleTickSound()" title="صوت نبضات الساعة الميكانيكية" class="p-2 rounded-full hover:bg-slate-700 text-slate-300 border border-slate-700/60 transition">
+            <i id="tickSoundIcon" data-lucide="volume-x" class="w-4 h-4"></i>
+        </button>
+
+        <!-- 12h / 24h format -->
+        <button id="btnFormat" onclick="toggleHourFormat()" title="تغيير نظام الوقت 12 / 24 ساعة" class="px-2.5 py-1 text-xs font-mono font-bold rounded-full bg-slate-800 border border-slate-700 text-amber-400 hover:bg-slate-700 transition">
+            24H
+        </button>
+
+        <!-- Fullscreen Toggle -->
+        <button onclick="toggleFullscreen()" title="شاشة كاملة" class="p-2 rounded-full hover:bg-slate-700 text-slate-200 border border-slate-700/60 transition">
+            <i data-lucide="maximize" class="w-4 h-4"></i>
+        </button>
+    </header>
+
+    <!-- Main Container: Supports Rolex, Digital, or Both Together -->
+    <main id="appStage" class="relative w-full h-full flex flex-col lg:flex-row items-center justify-center p-4 gap-8 transition-all duration-700">
+
+        <!-- ======================= 1. SAUDI ROYAL EDITION LUXURY WATCH ======================= -->
+        <section id="rolexSection" class="relative flex items-center justify-center transition-all duration-700 scale-110">
+            <!-- Steel Case & Knurled Bezel -->
+            <div id="rolexOuterCase" class="relative w-[86vw] h-[86vw] max-w-[500px] max-h-[500px] sm:w-[480px] sm:h-[480px] rounded-full rolex-knurling flex items-center justify-center p-3 shadow-2xl">
+                
+                <!-- Watch Crown Pin (Winding Stem on 3 O'Clock) -->
+                <div class="absolute -right-3.5 top-1/2 -translate-y-1/2 w-4 h-9 bg-gradient-to-r from-slate-400 via-amber-200 to-slate-600 rounded-r-md border border-slate-800 shadow-xl z-0 flex items-center justify-center">
+                    <div class="w-[2px] h-6 bg-amber-900/60"></div>
+                </div>
+
+                <!-- Ceramic Bezel Insert with 60-Minute Graduation Scale -->
+                <div id="rolexBezel" class="relative w-full h-full rounded-full bg-[#022c22] border-[7px] border-[#064e3b] flex items-center justify-center shadow-[inset_0_4px_12px_rgba(255,255,255,0.25),inset_0_-4px_15px_rgba(0,0,0,0.9)] overflow-hidden transition-colors duration-500">
+                    
+                    <!-- Bezel 12 O'Clock Inverted Triangle & Pearl Pip -->
+                    <div class="absolute top-1.5 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10">
+                        <div class="w-0 h-0 border-l-[9px] border-l-transparent border-r-[9px] border-r-transparent border-t-[13px] border-t-amber-400"></div>
+                        <div class="chromalight-fill w-3 h-3 -mt-1 rounded-full bg-white border border-slate-700 shadow-md"></div>
+                    </div>
+
+                    <!-- Bezel 10, 20, 30, 40, 50 Numerals -->
+                    <div class="absolute inset-0 font-cinzel text-amber-300 font-bold text-xs sm:text-sm select-none pointer-events-none">
+                        <span class="absolute top-[17%] right-[17%] -rotate-45">10</span>
+                        <span class="absolute top-[48%] right-[5%] -translate-y-1/2 -rotate-90">20</span>
+                        <span class="absolute bottom-[18%] right-[17%] -rotate-[135deg]">30</span>
+                        <span class="absolute bottom-[2%] left-1/2 -translate-x-1/2 -rotate-180">40</span>
+                        <span class="absolute bottom-[18%] left-[17%] rotate-[135deg]">50</span>
+                    </div>
+
+                    <!-- Steel Rehaut Ring -->
+                    <div class="relative w-[78%] h-[78%] rounded-full p-2 bg-gradient-to-tr from-slate-400 via-slate-200 to-slate-500 shadow-[inset_0_3px_8px_rgba(0,0,0,0.85)] flex items-center justify-center">
+                        
+                        <!-- Central Watch Dial Face -->
+                        <div id="rolexDial" class="dial-green relative w-full h-full rounded-full flex items-center justify-center shadow-[inset_0_0_25px_rgba(0,0,0,0.95)] overflow-hidden">
+                            
+                            <!-- Sunburst Light Radial Sweep -->
+                            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14)_0%,transparent_75%)] pointer-events-none"></div>
+
+                            <!-- Saudi Emblem (سيفين ونخلة) & Dial Inscription at 12 O'Clock -->
+                            <div class="absolute top-[14%] sm:top-[15%] flex flex-col items-center pointer-events-none z-10 text-center">
+                                <!-- Saudi Emblem: Two Crossed Swords & Palm Tree SVG -->
+                                <svg class="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Palm Tree Trunk -->
+                                    <path d="M48 64 C48.5 50 47.5 44 46.5 35 C49 35 51 35 53.5 35 C52.5 44 51.5 50 52 64 Z" fill="url(#goldGradient)" />
+                                    <!-- Palm Fronds / Leaves -->
+                                    <path d="M50 36 C42 32 35 25 33 16 C37 19 44 26 50 32 C56 26 63 19 67 16 C65 25 58 32 50 36 Z" fill="url(#goldGradient)" />
+                                    <path d="M50 34 C44 26 40 18 41 8 C44 14 47 23 50 29 C53 23 56 14 59 8 C60 18 56 26 50 34 Z" fill="url(#goldGradient)" />
+                                    <path d="M50 37 C40 37 31 32 26 25 C31 29 40 33 49 35 C51 35 60 29 74 25 C69 32 60 37 50 37 Z" fill="url(#goldGradient)" />
+                                    <path d="M50 38 C38 41 29 40 22 36 C28 41 39 42 49 37 C51 37 61 42 78 36 C71 40 62 41 50 38 Z" fill="url(#goldGradient)" />
+
+                                    <!-- Crossed Scimitar Swords -->
+                                    <!-- Sword 1: Bottom-Left to Top-Right -->
+                                    <path d="M22 75 L30 71 L68 53 C74 50 81 48 83 45 C78 50 71 54 65 57 L32 73 Z" fill="url(#goldGradient)" />
+                                    <!-- Sword 1 Hilt & Guard -->
+                                    <path d="M18 78 L23 75 L21 72 L16 75 Z" fill="#fae588" />
+                                    <circle cx="16" cy="76" r="2.2" fill="#d4af37" />
+
+                                    <!-- Sword 2: Bottom-Right to Top-Left -->
+                                    <path d="M78 75 L70 71 L32 53 C26 50 19 48 17 45 C22 50 29 54 35 57 L68 73 Z" fill="url(#goldGradient)" />
+                                    <!-- Sword 2 Hilt & Guard -->
+                                    <path d="M82 78 L77 75 L79 72 L84 75 Z" fill="#fae588" />
+                                    <circle cx="84" cy="76" r="2.2" fill="#d4af37" />
+
+                                    <!-- Center Intersect Pommel -->
+                                    <circle cx="50" cy="63" r="2.5" fill="#fae588" />
+
+                                    <!-- Linear Gradient Definition -->
+                                    <defs>
+                                        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#fff0a6" />
+                                            <stop offset="45%" stop-color="#d4af37" />
+                                            <stop offset="100%" stop-color="#997517" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+
+                                <span class="font-amiri text-amber-300 font-bold text-[13px] sm:text-[14px] tracking-wide leading-none mt-0.5 drop-shadow">المملكة العربية السعودية</span>
+                                <span class="font-cinzel text-amber-400/90 text-[7px] sm:text-[8px] tracking-[0.2em] font-bold mt-0.5">ROYAL SPECIAL EDITION</span>
+                                <span class="font-cinzel text-slate-300/80 text-[6px] tracking-[0.18em]">OYSTER PERPETUAL</span>
+                            </div>
+
+                            <!-- Lower Dial Certified Text at 6 O'Clock -->
+                            <div class="absolute bottom-[18%] flex flex-col items-center pointer-events-none z-10 text-center">
+                                <span class="font-cinzel text-amber-400 text-[6.5px] sm:text-[7.5px] font-semibold tracking-wider">1000<span class="text-[5px]">ft</span> = 300<span class="text-[5px]">m</span></span>
+                                <span class="font-cinzel text-slate-200 text-[6px] sm:text-[6.5px] tracking-[0.12em] font-medium">SUPERLATIVE CHRONOMETER</span>
+                                <span class="font-cinzel text-slate-400 text-[5.5px] sm:text-[6px] tracking-widest">OFFICIALLY CERTIFIED</span>
+                                <span class="font-cinzel text-amber-300 text-[5px] tracking-[0.25em] mt-0.5">SWISS MADE</span>
+                            </div>
+
+                            <!-- Date Window at 3 O'Clock with 2.5x Cyclops Lens Magnifier -->
+                            <div class="absolute right-[8%] top-1/2 -translate-y-1/2 z-20 flex items-center justify-center">
+                                <div class="w-8 h-6 sm:w-9 sm:h-7 bg-white rounded-xs border border-slate-600 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] flex items-center justify-center overflow-hidden">
+                                    <span id="rolexDayNumber" class="font-cinzel font-black text-sm sm:text-base text-slate-900 leading-none">14</span>
+                                </div>
+                                <!-- Cyclops Glass Magnifier -->
+                                <div class="cyclops-magnifier absolute w-11 h-8 sm:w-12 sm:h-9 rounded-full -right-1 pointer-events-none"></div>
+                            </div>
+
+                            <!-- Hour Markers (Classic Rolex Geometric Shapes) -->
+                            <div class="absolute inset-0 pointer-events-none z-10" id="dialHourMarkers">
+                                <!-- 12 O'Clock Inverted Triangle -->
+                                <div class="absolute top-[8%] left-1/2 -translate-x-1/2 flex flex-col items-center">
+                                    <div class="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[16px] border-t-amber-400"></div>
+                                    <div class="chromalight-fill w-3 h-2.5 -mt-3.5 bg-white rounded-t-xs shadow"></div>
+                                </div>
+                                <!-- 6 O'Clock Baton / Rectangle -->
+                                <div class="absolute bottom-[8%] left-1/2 -translate-x-1/2 w-3 h-7 bg-amber-400 p-[1.5px] rounded-xs shadow">
+                                    <div class="chromalight-fill w-full h-full bg-white rounded-2xs"></div>
+                                </div>
+                                <!-- 9 O'Clock Baton / Rectangle -->
+                                <div class="absolute top-1/2 left-[8%] -translate-y-1/2 w-7 h-3 bg-amber-400 p-[1.5px] rounded-xs shadow">
+                                    <div class="chromalight-fill w-full h-full bg-white rounded-2xs"></div>
+                                </div>
+                                <!-- Circular Markers at 1, 2, 4, 5, 7, 8, 10, 11 (JS generated) -->
+                                <div id="hourDotsLayer" class="absolute inset-0"></div>
+                            </div>
+
+                            <!-- Outer Minute Rail Track (60 precise ticks) -->
+                            <div id="minuteRailLayer" class="absolute inset-0 pointer-events-none"></div>
+
+                            <!-- ================= HANDS LAYER (CENTER PIVOT 50% 50%) ================= -->
+                            <div class="absolute inset-0 pointer-events-none z-30">
+                                
+                                <!-- HOUR HAND (Mercedes Hand) -->
+                                <div id="hourHandWrapper" class="hand-pivot w-3 h-[78px] -ml-[6px] -mt-[78px]">
+                                    <div class="relative w-full h-full flex flex-col items-center">
+                                        <!-- Mercedes Round Star -->
+                                        <div class="w-6 h-6 -mt-2 rounded-full bg-amber-400 p-[1.5px] flex items-center justify-center shadow-lg">
+                                            <div class="chromalight-fill w-full h-full rounded-full bg-white relative flex items-center justify-center overflow-hidden">
+                                                <div class="absolute w-[1.5px] h-full bg-amber-600"></div>
+                                                <div class="absolute w-[1.5px] h-full bg-amber-600 rotate-60"></div>
+                                                <div class="absolute w-[1.5px] h-full bg-amber-600 -rotate-60"></div>
+                                            </div>
+                                        </div>
+                                        <!-- Pointed Tip -->
+                                        <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[8px] border-b-amber-400 -mt-1"></div>
+                                        <!-- Shaft -->
+                                        <div class="w-2 flex-1 bg-amber-400 p-[1px] rounded-b-xs">
+                                            <div class="chromalight-fill w-full h-full bg-white"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- MINUTE HAND (Long Sword Baton) -->
+                                <div id="minuteHandWrapper" class="hand-pivot w-2.5 h-[115px] -ml-[5px] -mt-[115px]">
+                                    <div class="relative w-full h-full flex flex-col items-center">
+                                        <!-- Arrow tip -->
+                                        <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[10px] border-b-amber-400"></div>
+                                        <!-- Long shaft with luminous channel -->
+                                        <div class="w-2 flex-1 bg-amber-400 p-[1px] rounded-b-xs shadow-md flex items-center justify-center">
+                                            <div class="chromalight-fill w-full h-full bg-white"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- SECONDS HAND (Automatic continuous sweep + lollipop lume + counterweight tail) -->
+                                <div id="secondHandWrapper" class="seconds-pivot w-3 h-[175px] -ml-[6px] -mt-[140px]">
+                                    <div class="relative w-full h-full flex flex-col items-center">
+                                        <!-- Needle Pointer Tip -->
+                                        <div class="w-[1.5px] h-7 bg-amber-400 shadow"></div>
+                                        <!-- Lollipop Lume Circle -->
+                                        <div class="w-3.5 h-3.5 rounded-full bg-amber-400 p-[1px] shadow flex items-center justify-center">
+                                            <div class="chromalight-fill w-full h-full rounded-full bg-white"></div>
+                                        </div>
+                                        <!-- Main Rod to Center Pivot -->
+                                        <div class="w-[1.5px] h-[100px] bg-amber-400"></div>
+                                        <!-- Center Pivot Ring (Anchor) -->
+                                        <div class="w-3 h-3 rounded-full bg-amber-400 border border-amber-600 shadow -my-0.5"></div>
+                                        <!-- Counterweight Tail below center -->
+                                        <div class="w-[2px] h-[30px] bg-amber-400 rounded-b"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Centre Axis Pin (Covering all hands securely) -->
+                                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-amber-600 via-amber-300 to-amber-100 border border-amber-700 shadow-md z-40"></div>
+                            </div>
+
+                            <!-- Sapphire Crystal Glare / Sheen -->
+                            <div class="sapphire-sheen absolute inset-0 rounded-full pointer-events-none z-40"></div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= 2. DIGITAL OLED / LED CLOCK (STRICT LTR) ======================= -->
+        <section id="digitalSection" class="relative hidden flex-col items-center justify-center p-4 transition-all duration-700">
+            <!-- Background Ambient Aura -->
+            <div class="absolute w-[85vw] max-w-[650px] h-[320px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <!-- Date, Day, and Hijri Banner -->
+            <div class="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-4 text-slate-300 text-sm sm:text-lg font-semibold tracking-wide">
+                <span id="digiDayName" class="text-amber-400 font-bold"></span>
+                <span class="text-slate-600">•</span>
+                <span id="digiGregDate" class="text-slate-100"></span>
+                <span class="text-slate-600">•</span>
+                <span id="digiHijriDate" class="text-emerald-400 font-medium"></span>
+            </div>
+
+            <!-- Giant LED Digital Digits: Strictly LTR [HOURS] : [MINUTES] : [SECONDS] -->
+            <div class="force-ltr relative z-10 flex items-center justify-center font-orbitron font-black text-white select-none">
+                
+                <!-- 1. Hours (Left) -->
+                <div id="digiHours" class="w-[1.9ch] text-center text-6xl sm:text-8xl md:text-[8.5rem] lg:text-[9.5rem] text-amber-400 neon-amber leading-none">
+                    00
+                </div>
+
+                <!-- Separator Colon 1 -->
+                <div class="text-4xl sm:text-7xl md:text-[7rem] text-cyan-400/90 mx-1 sm:mx-3 animate-pulse leading-none">
+                    :
+                </div>
+
+                <!-- 2. Minutes (Middle) -->
+                <div id="digiMinutes" class="w-[1.9ch] text-center text-6xl sm:text-8xl md:text-[8.5rem] lg:text-[9.5rem] text-white neon-glow leading-none">
+                    00
+                </div>
+
+                <!-- Separator Colon 2 -->
+                <div class="text-4xl sm:text-7xl md:text-[7rem] text-cyan-400/90 mx-1 sm:mx-3 animate-pulse leading-none">
+                    :
+                </div>
+
+                <!-- 3. Seconds (Right) - Ticks 00 to 59 once per second -->
+                <div id="digiSeconds" class="w-[1.9ch] text-center text-6xl sm:text-8xl md:text-[8.5rem] lg:text-[9.5rem] text-cyan-300 neon-glow leading-none">
+                    00
+                </div>
+
+                <!-- AM / PM Indicator (Far Right) -->
+                <div id="ampmWrapper" class="flex flex-col justify-center ml-2 sm:ml-4 text-left">
+                    <span id="digiAmPm" class="font-tajawal text-xl sm:text-3xl md:text-4xl font-black text-amber-400"></span>
+                </div>
+            </div>
+
+            <!-- Smooth Millisecond Progress Bar (Sweep representation 0 to 1000ms) -->
+            <div class="force-ltr relative z-10 mt-6 w-full max-w-lg bg-slate-800/80 border border-slate-700/80 rounded-full h-2 sm:h-2.5 overflow-hidden shadow-inner">
+                <div id="msBar" class="h-full bg-gradient-to-r from-amber-400 via-cyan-400 to-emerald-400 w-0 transition-none"></div>
+            </div>
+
+            <!-- Timezone & Location Status Footer Bar -->
+            <div class="relative z-10 mt-6 flex items-center gap-3 px-4 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-xs sm:text-sm text-slate-400">
+                <span class="flex h-2.5 w-2.5 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span id="locationBadge">توقيت المملكة العربية السعودية (مكة المكرمة / الرياض)</span>
+                <span class="text-slate-600">|</span>
+                <span id="tzBadge" class="font-mono text-cyan-300">GMT+3</span>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom HUD Info / Tips -->
+    <footer id="bottomHud" class="hud-control fixed bottom-4 z-50 flex items-center gap-3 text-xs text-slate-400 bg-slate-900/80 backdrop-blur-md px-5 py-2 rounded-full border border-slate-800 shadow-xl">
+        <span class="flex items-center gap-1.5 text-amber-300 font-medium">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            حركة ميكانيكية فائقة النعومة 28,800 ذبذبة بالساعة مع تصميم ملكي سعودي
+        </span>
+        <span class="hidden sm:inline text-slate-600">|</span>
+        <span class="hidden sm:inline text-slate-400">
+            اضغط في أي مكان لإخفاء / إظهار لوحة التحكم
+        </span>
+    </footer>
+
+    <script>
+        // ================= APPLICATION STATE =================
+        let displayMode = 'rolex'; // 'rolex' | 'digital' | 'dual'
+        let is24Hour = true; // Default 24H military/standard format to avoid inverted AM/PM
+        let isLumeMode = false;
+        let isAudioTickEnabled = false;
+        let activeTheme = 'green';
+        let hudTimer = null;
+        let isHudVisible = true;
+        let audioContext = null;
+
+        // Color & Theme Presets
+        const watchThemes = {
+            green: {
+                bezelBg: '#022c22',
+                bezelBorder: '#064e3b',
+                dialClass: 'dial-green',
+                name: 'Saudi Royal Green Edition'
+            },
+            black: {
+                bezelBg: '#05080c',
+                bezelBorder: '#0a0f16',
+                dialClass: 'dial-black',
+                name: 'Royal Black Cerachrom'
+            },
+            blue: {
+                bezelBg: '#082f49',
+                bezelBorder: '#0284c7',
+                dialClass: 'dial-blue',
+                name: 'Royal Smurf Blue'
+            },
+            gold: {
+                bezelBg: '#1f1300',
+                bezelBorder: '#d97706',
+                dialClass: 'dial-gold',
+                name: 'Pure Gold Royal Edition'
+            }
+        };
+
+        // DOM Elements
+        const rolexSection = document.getElementById('rolexSection');
+        const digitalSection = document.getElementById('digitalSection');
+        const hourHandWrapper = document.getElementById('hourHandWrapper');
+        const minuteHandWrapper = document.getElementById('minuteHandWrapper');
+        const secondHandWrapper = document.getElementById('secondHandWrapper');
+        const rolexDayNumber = document.getElementById('rolexDayNumber');
+
+        const digiHours = document.getElementById('digiHours');
+        const digiMinutes = document.getElementById('digiMinutes');
+        const digiSeconds = document.getElementById('digiSeconds');
+        const digiAmPm = document.getElementById('digiAmPm');
+        const ampmWrapper = document.getElementById('ampmWrapper');
+        const msBar = document.getElementById('msBar');
+
+        const digiDayName = document.getElementById('digiDayName');
+        const digiGregDate = document.getElementById('digiGregDate');
+        const digiHijriDate = document.getElementById('digiHijriDate');
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Build geometric dial markers
+        function buildRolexDialDetails() {
+            // 1. Generate 8 round hour dots (1, 2, 4, 5, 7, 8, 10, 11)
+            const hourDotsLayer = document.getElementById('hourDotsLayer');
+            hourDotsLayer.innerHTML = '';
+            const roundHours = [1, 2, 4, 5, 7, 8, 10, 11];
+            
+            const radiusPercent = 38;
+
+            roundHours.forEach(hour => {
+                const angleDeg = (hour * 30) - 90;
+                const rad = angleDeg * (Math.PI / 180);
+                const x = 50 + radiusPercent * Math.cos(rad);
+                const y = 50 + radiusPercent * Math.sin(rad);
+
+                const dot = document.createElement('div');
+                dot.className = 'absolute w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-amber-400 p-[1.5px] shadow flex items-center justify-center -translate-x-1/2 -translate-y-1/2';
+                dot.style.left = `${x}%`;
+                dot.style.top = `${y}%`;
+
+                const lumeCore = document.createElement('div');
+                lumeCore.className = 'chromalight-fill w-full h-full rounded-full bg-white';
+                dot.appendChild(lumeCore);
+
+                hourDotsLayer.appendChild(dot);
+            });
+
+            // 2. Generate 60 minute track tick marks
+            const minuteRailLayer = document.getElementById('minuteRailLayer');
+            minuteRailLayer.innerHTML = '';
+            for (let i = 0; i < 60; i++) {
+                const deg = i * 6;
+                const isFiveMin = (i % 5 === 0);
+                const tick = document.createElement('div');
+                tick.className = 'absolute left-1/2 top-0 -translate-x-1/2 origin-bottom';
+                tick.style.width = isFiveMin ? '2px' : '1px';
+                tick.style.height = isFiveMin ? '8px' : '4px';
+                tick.style.backgroundColor = isFiveMin ? 'rgba(251, 191, 36, 0.9)' : 'rgba(255, 255, 255, 0.4)';
+                tick.style.top = '10px';
+                tick.style.transformOrigin = '50% 150px';
+                tick.style.transform = `rotate(${deg}deg)`;
+                minuteRailLayer.appendChild(tick);
+            }
+        }
+
+        // ================= PRECISE CLOCK ENGINE =================
+        let lastLoggedSecond = -1;
+
+        function runPreciseClockEngine() {
+            const now = new Date();
+
+            const ms = now.getMilliseconds();
+            const s = now.getSeconds();
+            const m = now.getMinutes();
+            const h = now.getHours();
+
+            // 1. CALCULATE EXACT WATCH HAND ANGLES
+            // Seconds: 360 deg in 60s -> 6 deg/sec. Smooth continuous sweeping for automatic mechanical movement
+            const secondDegrees = (s + ms / 1000) * 6;
+
+            // Minutes: 360 deg in 60m -> 6 deg/min. Advances continuously with seconds
+            const minuteDegrees = (m + s / 60 + ms / 60000) * 6;
+
+            // Hours: 360 deg in 12 hours -> 30 deg/hour. Advances continuously with minutes & seconds
+            const hourDegrees = ((h % 12) + m / 60 + s / 3600) * 30;
+
+            // Apply transforms to analog hands
+            secondHandWrapper.style.transform = `rotate(${secondDegrees}deg)`;
+            minuteHandWrapper.style.transform = `rotate(${minuteDegrees}deg)`;
+            hourHandWrapper.style.transform = `rotate(${hourDegrees}deg)`;
+
+            // Rolex Date Magnifier: Day of Month
+            rolexDayNumber.textContent = now.getDate();
+
+            // 2. DIGITAL CLOCK ENGINE (Strictly Left-to-Right: Hours, Minutes, Seconds)
+            let formattedHours = h;
+            let ampm = '';
+
+            if (!is24Hour) {
+                ampm = h >= 12 ? 'م' : 'ص';
+                formattedHours = h % 12 || 12;
+                ampmWrapper.style.display = 'flex';
+                digiAmPm.textContent = ampm;
+            } else {
+                ampmWrapper.style.display = 'none';
+            }
+
+            digiHours.textContent = String(formattedHours).padStart(2, '0');
+            digiMinutes.textContent = String(m).padStart(2, '0');
+            digiSeconds.textContent = String(s).padStart(2, '0');
+
+            // Millisecond smooth visual progress bar
+            msBar.style.width = `${(ms / 1000) * 100}%`;
+
+            // Mechanical Audio Tick Trigger (Once per full second)
+            if (isAudioTickEnabled && s !== lastLoggedSecond) {
+                lastLoggedSecond = s;
+                playWatchTick();
+            }
+
+            requestAnimationFrame(runPreciseClockEngine);
+        }
+
+        // ================= AUDIO TICK SIMULATOR (Web Audio API) =================
+        function initAudioContext() {
+            if (!audioContext) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioContext = new AudioContext();
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }
+
+        function playWatchTick() {
+            try {
+                if (!audioContext) return;
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(4500, audioContext.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.015);
+
+                gain.gain.setValueAtTime(0.04, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.015);
+
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+
+                osc.start();
+                osc.stop(audioContext.currentTime + 0.016);
+            } catch (e) {}
+        }
+
+        function toggleTickSound() {
+            initAudioContext();
+            isAudioTickEnabled = !isAudioTickEnabled;
+            const icon = document.getElementById('tickSoundIcon');
+            const btn = document.getElementById('btnTickSound');
+
+            if (isAudioTickEnabled) {
+                icon.setAttribute('data-lucide', 'volume-2');
+                btn.classList.add('text-amber-400', 'bg-slate-800');
+            } else {
+                icon.setAttribute('data-lucide', 'volume-x');
+                btn.classList.remove('text-amber-400', 'bg-slate-800');
+            }
+            lucide.createIcons();
+        }
+
+        // ================= DATE FORMATTING (ARABIC) =================
+        function updateArabicDates() {
+            const now = new Date();
+
+            const arabicDays = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+            digiDayName.textContent = arabicDays[now.getDay()];
+
+            // Gregorian Arabic
+            const gregOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            digiGregDate.textContent = now.toLocaleDateString('ar-SA-u-ca-gregory', gregOptions);
+
+            // Hijri Date (Umm al-Qura)
+            try {
+                const hijriOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+                digiHijriDate.textContent = now.toLocaleDateString('ar-SA-u-ca-islamic-umalqura', hijriOptions);
+            } catch (err) {
+                digiHijriDate.textContent = `${now.getDate()} هـ`;
+            }
+
+            const offset = -now.getTimezoneOffset() / 60;
+            document.getElementById('tzBadge').textContent = `GMT${offset >= 0 ? '+' : ''}${offset}`;
+        }
+
+        // ================= MODE & THEME CONTROLS =================
+        function setDisplayMode(mode) {
+            displayMode = mode;
+            const btnRolex = document.getElementById('btnRolexOnly');
+            const btnDigital = document.getElementById('btnDigitalOnly');
+            const btnDual = document.getElementById('btnDualMode');
+
+            [btnRolex, btnDigital, btnDual].forEach(b => {
+                b.className = 'px-3.5 py-1.5 rounded-full transition-all text-slate-300 hover:text-white';
+            });
+
+            if (mode === 'rolex') {
+                btnRolex.className = 'px-3.5 py-1.5 rounded-full transition-all bg-emerald-600 text-white font-bold shadow';
+                rolexSection.classList.remove('hidden');
+                digitalSection.classList.add('hidden');
+                digitalSection.classList.remove('flex');
+                rolexSection.style.transform = 'scale(1.15)';
+            } else if (mode === 'digital') {
+                btnDigital.className = 'px-3.5 py-1.5 rounded-full transition-all bg-emerald-600 text-white font-bold shadow';
+                rolexSection.classList.add('hidden');
+                digitalSection.classList.remove('hidden');
+                digitalSection.classList.add('flex');
+                rolexSection.style.transform = 'scale(1)';
+            } else { // Dual
+                btnDual.className = 'px-3.5 py-1.5 rounded-full transition-all bg-emerald-600 text-white font-bold shadow';
+                rolexSection.classList.remove('hidden');
+                digitalSection.classList.remove('hidden');
+                digitalSection.classList.add('flex');
+                rolexSection.style.transform = 'scale(0.95)';
+            }
+        }
+
+        function changeRolexTheme(themeKey) {
+            if (!watchThemes[themeKey]) return;
+            activeTheme = themeKey;
+            const theme = watchThemes[themeKey];
+
+            const bezel = document.getElementById('rolexBezel');
+            const dial = document.getElementById('rolexDial');
+
+            bezel.style.backgroundColor = theme.bezelBg;
+            bezel.style.borderColor = theme.bezelBorder;
+
+            dial.className = `${theme.dialClass} relative w-full h-full rounded-full flex items-center justify-center shadow-[inset_0_0_25px_rgba(0,0,0,0.95)] overflow-hidden`;
+        }
+
+        function toggleLume() {
+            isLumeMode = !isLumeMode;
+            const appStage = document.getElementById('appStage');
+            const btnLume = document.getElementById('btnLume');
+
+            if (isLumeMode) {
+                appStage.classList.add('lume-mode');
+                btnLume.classList.add('bg-cyan-950', 'text-cyan-300', 'border-cyan-500');
+            } else {
+                appStage.classList.remove('lume-mode');
+                btnLume.classList.remove('bg-cyan-950', 'text-cyan-300', 'border-cyan-500');
+            }
+        }
+
+        function toggleHourFormat() {
+            is24Hour = !is24Hour;
+            document.getElementById('btnFormat').textContent = is24Hour ? '24H' : '12H';
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+        }
+
+        // Auto-hiding HUD toolbar
+        function handleUserActivity() {
+            const topHud = document.getElementById('topHud');
+            const bottomHud = document.getElementById('bottomHud');
+
+            topHud.classList.remove('hud-hidden');
+            bottomHud.classList.remove('hud-hidden-bottom');
+            isHudVisible = true;
+
+            clearTimeout(hudTimer);
+            hudTimer = setTimeout(() => {
+                topHud.classList.add('hud-hidden');
+                bottomHud.classList.add('hud-hidden-bottom');
+                isHudVisible = false;
+            }, 4000);
+        }
+
+        window.addEventListener('mousemove', handleUserActivity);
+        window.addEventListener('touchstart', handleUserActivity);
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('#topHud') && !e.target.closest('#bottomHud')) {
+                const topHud = document.getElementById('topHud');
+                const bottomHud = document.getElementById('bottomHud');
+                if (isHudVisible) {
+                    topHud.classList.add('hud-hidden');
+                    bottomHud.classList.add('hud-hidden-bottom');
+                    isHudVisible = false;
+                } else {
+                    handleUserActivity();
+                }
+            }
+        });
+
+        // Initialize on page load
+        window.onload = () => {
+            buildRolexDialDetails();
+            updateArabicDates();
+            setDisplayMode('rolex');
+            handleUserActivity();
+            requestAnimationFrame(runPreciseClockEngine);
+            setInterval(updateArabicDates, 600000);
+        };
+    </script>
+</body>
+</html>
